@@ -85,10 +85,11 @@ class CasualEmployeeController extends Controller
      */
     public function index()
     {
-        // Retrieve all casual employees from the database
-        $casualEmployees = CasualEmployee::all();
+    // Retrieve all casual employees from the database
+    $casualEmployees = CasualEmployee::all(['id', 'first_name', 'last_name', 'id_number', 'casual_code', 'branch', 'phone_number', 'gender', 'department', 'rate_per_day', 'status']);
 
-        // Pass casual employees data to the dashboard view
-        return view('dashboard', ['casualEmployees' => $casualEmployees]);
-    }
+    // Pass casual employees data to the dashboard view
+    return view('dashboard', ['casualEmployees' => $casualEmployees]);
+    }   
+
 }
