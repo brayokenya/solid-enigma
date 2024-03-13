@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('casual_code')->unique();
             $table->string('branch');
             $table->string('phone_number');
-            $table->string('gender');
+            $table->string('gender');$table->string('first_name');
+            
             $table->string('department');
             $table->decimal('rate_per_day', 10, 2);
-            $table->timestamps();
             $table->enum('status', ['active', 'inactive'])->default('active');
         });
     }
@@ -32,6 +32,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('casual_employees', function (Blueprint $table) {
+            $table->string('first_name');
             $table->dropColumn('last_name');
             $table->dropColumn('id_number');
             $table->dropColumn('casual_code');
