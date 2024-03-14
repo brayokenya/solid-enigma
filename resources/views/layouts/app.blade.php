@@ -13,12 +13,14 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
+         <!-- Scripts -->
+   
         <!-- Styles -->
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
+        {{--<x-banner /> --}}
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')

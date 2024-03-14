@@ -5,9 +5,36 @@
         </h2>
     </x-slot>
 
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+
+                <!-- Download Form Button -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <a href="{{ route('casuals.downloadForm', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
+                </td>
+
+        <!-- In your view file -->
+        @if(Session::has('download.in.the.next.request'))
+            <script>
+                // Create a hidden link and trigger the download
+                var link = document.createElement('a');
+                link.href = 'casual.pdf' + '{{ Session::get('download.in.the.next.request') }}';
+                link.download = '{{ Session::get('download.in.the.next.request') }}';
+                document.body.appendChild(link);
+                link.click();
+            </script>
+        @endif
+
+    {{-- </div>
+    <td class="px-6 py-4 whitespace-nowrap">
+        <a href="{{ route('download.form', $casualEmployee->id) }}" class="btn btn-primary">Download Form</a>
+    </td> --}}
+    @if(Session::has('download.in.the.next.request'))
+         <meta http-equiv="refresh" content="5;url={{ Session::get('download.in.the.next.request') }}">
+      @endif
+
                 <!-- Onboard a Casual Employee Form -->
                 <div class="p-6">
                     <form method="POST" action="{{ route('casuals.onboard') }}">
@@ -132,6 +159,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($casualEmployees as $casualEmployee)
+
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         {{ $casualEmployee->first_name }}
@@ -167,8 +195,9 @@
                                         <a href="{{ route('casuals.edit', $casualEmployee) }}"
                                             class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                     </td>
-
-                                    <!-- Add similar td elements for other fields -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a href="{{ route('download.form', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
