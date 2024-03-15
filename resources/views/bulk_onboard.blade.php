@@ -1,4 +1,3 @@
-<!-- resources/views/bulk_onboard.blade.php -->
 
 @extends('layouts.app')
 
@@ -10,7 +9,7 @@
                     <div class="card-header">{{ __('Bulk Onboard Casual Employees') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
+                        <form id="bulkOnboardForm" method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -23,7 +22,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
+                            <button type="button" onclick="submitForm()" class="btn btn-primary">
                                 {{ __('Submit') }}
                             </button>
                         </form>
@@ -32,4 +31,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function submitForm() {
+            // Get the form data
+            let formData = new FormData(document.getElementById('bulkOnboardForm'));
+
+            // Send a POST request to the /bulk-onboard route
+            fetch('{{ route("bulk.onboard") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Handle the response
+                console.log('Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Redirect to a success page or handle success message
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+                // Display error message to the user
+                alert('An error occurred while processing the request.');
+            });
+        }
+    </script>
 @endsection

@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CasualEmployee;
-use Illuminate\Support\Facades\Session;
-use TCPDF;
-use Illuminate\Support\Facades\Redirect;
-use App\Imports\CasualEmployeesImport; //
+use App\Imports\CasualEmployeesImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BulkOnboardController extends Controller
@@ -27,7 +24,7 @@ class BulkOnboardController extends Controller
 
             // Validate the file
             $validator = Validator::make(['file' => $file], [
-                'file' => 'required|mimes:xlsx,xls|max:2048', 
+                'file' => 'required|mimes:xlsx,xls|max:2048',
             ]);
 
             // If the file is not valid, return with error messages
@@ -56,6 +53,8 @@ class BulkOnboardController extends Controller
 
             // Redirect back to the dashboard with a success message
             return redirect('/dashboard')->with('success', 'Bulk onboarding completed.');
+            // return redirect()->route('bulk-onboard', ['bulk.onboard'=>$bulk.onboard]);
+            // return redirect()->route('bulk.onboard')->with('success', 'Bulk onboarding completed.');
         }
     }
 

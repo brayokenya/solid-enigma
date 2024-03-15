@@ -5,17 +5,6 @@
         </h2>
     </x-slot>
 
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <form action="{{ route('bulk.onboard') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="file" accept=".xlsx, .xls">
-                    <button type="submit">Upload File</button>
-                </form>
-
-
         <!-- In your view file -->
         @if(Session::has('download.in.the.next.request'))
             <script>
@@ -157,6 +146,30 @@
 
                                     <!-- Add similar th elements for other fields -->
                                 </tr>
+                                <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
+                                    @csrf
+
+                                    <div class="form-group">
+                                        <label for="file">Upload Excel File</label>
+                                        <input id="file" type="file" class="form-control-file" name="file" required>
+                                        @error('file')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                                <div class="py-12">
+                                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                                            <form action="{{ route('bulk.onboard') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="file" name="file" accept=".xlsx, .xls">
+                                                <button type="submit">Upload File</button>
+                                            </form>
+
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($casualEmployees as $casualEmployee)
