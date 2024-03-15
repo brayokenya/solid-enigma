@@ -9,15 +9,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <form action="{{ route('bulk.onboard') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="file" accept=".xlsx, .xls">
+                    <button type="submit">Upload File</button>
+                </form>
 
-                <!-- Download Form Button -->
-                {{-- <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="{{ route('casual_employee.downloadForm', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
-                </td> --}}
-
-                {{-- <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="{{ route('casual_employee_details.pdf', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
-                </td> --}}
 
         <!-- In your view file -->
         @if(Session::has('download.in.the.next.request'))
