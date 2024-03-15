@@ -45,3 +45,4 @@ Route::get('/casuals/{casualEmployee}/download-form', [CasualEmployeeController:
 Route::get('/download-pdf', 'CasualEmployeeController@downloadPDF')->name('download.pdf');
 Route::get('/casual-employees/{id}/download-form', 'CasualEmployeeController@downloadPDF')->name('download.form');
 Route::get('/generate-pdf/{casualEmployee}', [PDFController::class, 'generatePDF']);
+Route::get('/casual-employees/{id}/download-form', [CasualEmployeeController::class, 'downloadPDF'])->name('download.form');

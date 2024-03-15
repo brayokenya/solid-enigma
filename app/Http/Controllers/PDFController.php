@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use TCPDF;
+use App\Models\CasualEmployee;
+use Illuminate\Support\Facades\Redirect;
 
 class PDFController extends Controller
 {
