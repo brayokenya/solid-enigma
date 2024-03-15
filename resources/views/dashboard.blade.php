@@ -11,16 +11,20 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                 <!-- Download Form Button -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="{{ route('casuals.downloadForm', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
-                </td>
+                {{-- <td class="px-6 py-4 whitespace-nowrap">
+                    <a href="{{ route('casual_employee.downloadForm', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
+                </td> --}}
+
+                {{-- <td class="px-6 py-4 whitespace-nowrap">
+                    <a href="{{ route('casual_employee_details.pdf', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
+                </td> --}}
 
         <!-- In your view file -->
         @if(Session::has('download.in.the.next.request'))
             <script>
                 // Create a hidden link and trigger the download
                 var link = document.createElement('a');
-                link.href = 'casual.pdf' + '{{ Session::get('download.in.the.next.request') }}';
+                link.href = 'casual_employee_details.pdf' + '{{ Session::get('download.in.the.next.request') }}';
                 link.download = '{{ Session::get('download.in.the.next.request') }}';
                 document.body.appendChild(link);
                 link.click();

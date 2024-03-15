@@ -46,3 +46,5 @@ Route::get('/download-pdf', 'CasualEmployeeController@downloadPDF')->name('downl
 Route::get('/casual-employees/{id}/download-form', 'CasualEmployeeController@downloadPDF')->name('download.form');
 Route::get('/generate-pdf/{casualEmployee}', [PDFController::class, 'generatePDF']);
 Route::get('/casual-employees/{id}/download-form', [CasualEmployeeController::class, 'downloadPDF'])->name('download.form');
+Route::get('/casual-employees/{casualEmployee}/download-form', [CasualEmployeeController::class, 'downloadForm'])->name('casual_employee.downloadForm');
+Route::get('/download-file', [CasualEmployeeController::class, 'downloadFile'])->name('download.file');

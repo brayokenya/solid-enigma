@@ -16,6 +16,12 @@ class CasualEmployeeController extends Controller
      * @param  \App\Models\CasualEmployee  $casualEmployee
      * @return \Illuminate\Http\Response
      */
+
+     public function show(CasualEmployee $casualEmployee)
+{
+    return view('/dashboard', compact('casualEmployee'));
+}
+
     public function edit(CasualEmployee $casualEmployee)
     {
         // Retrieve the casual employee from the database
@@ -96,7 +102,6 @@ class CasualEmployeeController extends Controller
 }
 // }
 
-// Inside CasualEmployeeController
 public function downloadForm(CasualEmployee $casualEmployee)
 {
     // Create a new TCPDF instance
@@ -117,27 +122,41 @@ public function downloadForm(CasualEmployee $casualEmployee)
     // Add content to the PDF
     $pdf->writeHTML("First Name: $casualEmployee->first_name <br>");
     $pdf->writeHTML("Last Name: $casualEmployee->last_name <br>");
-    $pdf->writeHTML("phone_number: $casualEmployee->phone_number <br>");
-    $pdf->writeHTML("casual_code: $casualEmployee->casual-code <br>");
-    $pdf->writeHTML("gender: $casualEmployee->gender <br>");
-    $pdf->writeHTML("banch: $casualEmployee->branch<br>");
-    $pdf->writeHTML("department: $casualEmployee->department <br>");
-    $pdf->writeHTML("rate_per_day: $casualEmployee->rate_per_day <br>");
-
+    // Add more fields as needed...
 
     // Output the PDF as a file
     $pdf->Output(public_path('pdfs/casual_employee_details.pdf'), 'F');
+
+    // Set flash session with the file name for download
+    Session::flash('download.in.the.next.request', 'casual_employee_details.pdf');
 
     // Redirect back to the dashboard with a success message
     return redirect('/dashboard')->with('success', 'PDF generated successfully!');
 }
 public function downloadFile()
 {
-    $file_path = public_path('pdfs/casual_employee_details.pdf');
-    $file_name = 'casual_employee_details.pdf';
+    // Retrieve the file name from the flash session
+    $file_name = Session::get('download.in.the.next.request');
 
-    return response()->download($file_path, $file_name);
+    // Check if the file name exists
+    if ($file_name) {
+        // Path to the file you want to download
+        $file_path = public_path('pdfs/' . $file_name);
+
+        // Check if the file exists
+        if (file_exists($file_path)) {
+            // Provide the file for download
+            return response()->download($file_path, $file_name);
+        } else {
+            // Redirect back with an error message if the file does not exist
+            return redirect()->back()->with('error', 'File not found for download.');
+        }
+    } else {
+        // Redirect back with an error message if the flash session is not set
+        return redirect()->back()->with('error', 'No file to download.');
+    }
 }
+
 public function downloadPDF()
 {
     // Path to the PDF file
