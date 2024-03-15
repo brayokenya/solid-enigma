@@ -131,102 +131,59 @@ public function downloadForm(CasualEmployee $casualEmployee)
     // Redirect back to the dashboard with a success message
     return redirect('/dashboard')->with('success', 'PDF generated successfully!');
 }
-    public function downloadPDF()
-    {
-        // Path to the PDF file
-        $file_path = public_path('pdfs/casual_employee_details.pdf');
+public function downloadFile()
+{
+    $file_path = public_path('pdfs/casual_employee_details.pdf');
+    $file_name = 'casual_employee_details.pdf';
+
+    return response()->download($file_path, $file_name);
+}
+public function downloadPDF()
+{
+    // Path to the PDF file
+    $file_path = public_path('pdfs/casual_employee_details.pdf');
+
+    // Check if the file exists
+    if (file_exists($file_path)) {
+        // Provide the file for download
+        return response()->download($file_path, 'casual_employee_details.pdf');
+    } else {
+        // Redirect back with an error message if the file does not exist
+        return redirect()->back()->with('error', 'PDF file not found.');
+    }
+}
+
+public function initiateFileDownload()
+{
+    // Set the flash session with the file name
+    Session::flash('download.in.the.next.request', 'casual_employee_details.pdf');
+
+    // Redirect to the page where the file download will be handled
+    return Redirect::to('/dashboard');
+}
+
+public function handleFileDownload()
+{
+    // Retrieve the file name from the flash session
+    $file_name = Session::get('download.in.the.next.request');
+
+    // Check if the file name exists
+    if ($file_name) {
+        // Path to the file you want to download
+        $file_path = public_path('pdfs/' . $file_name);
 
         // Check if the file exists
         if (file_exists($file_path)) {
             // Provide the file for download
-            return response()->download($file_path, 'casual_employee_details.pdf');
+            return response()->download($file_path, $file_name);
         } else {
             // Redirect back with an error message if the file does not exist
-            return redirect()->back()->with('error', 'PDF file not found.');
+            return redirect()->back()->with('error', 'File not found for download.');
         }
+    } else {
+        // Redirect back with an error message if the flash session is not set
+        return redirect()->back()->with('error', 'No file to download.');
     }
-    public function initiateFileDownload()
-    {
-        // Set the flash session with the file name
-        Session::flash('download.in.the.next.request', 'filetodownload.pdf');
+}
+}
 
-        // Redirect to the page where the file download will be handled
-        return Redirect::to('/handle/download');
-    }
-
-    public function handleFileDownload()
-    {
-        // Retrieve the file name from the flash session
-        $fileName = Session::get('download.in.the.next.request');
-
-        // Check if the file name exists
-        if ($fileName) {
-            // Path to the file you want to download
-            $filePath = public_path('path/to/' . $fileName);
-
-            // Check if the file exists
-            if (file_exists($filePath)) {
-                // Provide the file for download
-                return response()->download($filePath, $fileName);
-            } else {
-                // Redirect back with an error message if the file does not exist
-                return redirect()->back()->with('error', 'File not found for download.');
-            }
-        } else {
-            // Redirect back with an error message if the flash session is not set
-            return redirect()->back()->with('error', 'No file to download.');
-        }
-    }
-//     public function downloadFile()
-// {
-//     $file_path = public_path('/home/nayere/Rebecca/casual/solid-enigma/resources/views/dashboard.blade.php.pdf');
-//     $file_name = 'casualEmployee_file_name.pdf';
-//     Session::flash('download.in.the.next.request', 'filetodownload.pdf');
-
-//     return Redirect::to('/dashboard');
-//     return response()->download($/home/nayere/Rebecca/casual/solid-enigma/resources/views/dashboard.blade.php, $casual_employee_form);
-// }
-// public function downloadForm(CasualEmployee $casualEmployee)
-// {
-    // Generate the PDF file based on the provided casualEmployee data
-    // $pdfController = new PDFController();
-    // $pdfController->generatePDF($casualEmployee);
-
-    // Redirect back to the dashboard with a success message
-//     return redirect('/dashboard')->with('success', 'Form downloaded successfully!');
-// }
-
-// public function downloadFile()
-// {
-    // Path to the file you want to download
-    // $file_path = public_path('public/pdfs.pdf');
-    // Custom file name for the downloaded file
-    // $file_name = 'casual_employee.pdf';
-
-    // Set session flash message with file information
-    // Session::flash('download.file', [
-    //     'path' => $file_path,
-    //     'name' => $file_name
-    // ]);
-
-    // Redirect to another route where you handle the file download
-//     return Redirect::to('/dashboard');
-// }
-
-// public function handleDownload()
-// {
-    // Retrieve the session flash message with file information
-    // $file_info = Session::get('download.file');
-
-    // Check if the session flash message exists
-    // if ($file_info) {
-        // Retrieve file path and name
-        // $file_path = $file_info['public/pdfs'];
-        // $file_name = $file_info['casual_employee'];
-
-        // Provide the file for download
-    //     return response()->download($file_path, $file_name)->deleteFileAfterSend(true);
-    // } else {
-        // Redirect back with an error message if file information is not available
-    //     return redirect()->back()->with('error', 'File not found for download.');
-   

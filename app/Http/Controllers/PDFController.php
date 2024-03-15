@@ -17,9 +17,12 @@ class PDFController extends Controller
         $pdf->Write(5, 'Form Content Here');
 
         // Output PDF content as download
-        $pdf->Output('casual_employee_form.pdf', 'D');
+        $pdf->Output(public_path('pdfs/casual_employee_details.pdf'), 'F');
+
+        return redirect()->back()->with('success', 'PDF generated successfully.');
     }
 }
+
 
 // namespace App\Http\Controllers;
 

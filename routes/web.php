@@ -21,15 +21,6 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -40,23 +31,7 @@ Route::middleware([
 });
 
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     $casualEmployees = []; // Replace this with your actual data
 
-//     return Inertia::render('Dashboard', [
-//         'casualEmployees' => $casualEmployees,
-//     ]);
-// })->name('dashboard');
-
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return Inertia::render('Dashboard');
-//     })->name('dashboard');
-// });
 
 Route::post('/casuals/onboard', [CasualEmployeeController::class, 'onboard'])->name('casuals.onboard');
 
@@ -68,3 +43,5 @@ Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 Route::get('/casuals/{casualEmployee}/download-form', [CasualEmployeeController::class, 'downloadForm'])->name('casuals.downloadForm');
 // Inside routes/web.php
 Route::get('/download-pdf', 'CasualEmployeeController@downloadPDF')->name('download.pdf');
+Route::get('/casual-employees/{id}/download-form', 'CasualEmployeeController@downloadPDF')->name('download.form');
+Route::get('/generate-pdf/{casualEmployee}', [PDFController::class, 'generatePDF']);
