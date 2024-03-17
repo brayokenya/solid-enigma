@@ -7,11 +7,25 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\CasualEmployee;
 use App\Imports\CasualEmployeesImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+
 
 class BulkOnboardController extends Controller
 {
 
+    public function index()
+    {
+        // Retrieve all casual employees from the database
+        $casualEmployees = CasualEmployee::all(['id', 'first_name', 'last_name', 'id_number', 'casual_code', 'branch', 'phone_number', 'gender', 'department', 'rate_per_day', 'status']);
 
+        // Pass casual employees data to the dashboard view
+        return view('dashboard', ['casualEmployees' => $casualEmployees]);
+    }
+    public function showBulkOnboardForm()
+    {
+        return view('bulk_onboard'); 
+    }
         public function bulkOnboard(Request $request)
         {
             // Validate the uploaded file
@@ -53,8 +67,7 @@ class BulkOnboardController extends Controller
 
             // Redirect back to the dashboard with a success message
             return redirect('/dashboard')->with('success', 'Bulk onboarding completed.');
-            // return redirect()->route('bulk-onboard', ['bulk.onboard'=>$bulk.onboard]);
-            // return redirect()->route('bulk.onboard')->with('success', 'Bulk onboarding completed.');
+
         }
     }
 
