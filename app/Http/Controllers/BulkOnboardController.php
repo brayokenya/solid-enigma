@@ -24,7 +24,7 @@ class BulkOnboardController extends Controller
     }
     public function showBulkOnboardForm()
     {
-        return view('bulk_onboard'); 
+        return view('bulk_onboard');
     }
         public function bulkOnboard(Request $request)
         {
