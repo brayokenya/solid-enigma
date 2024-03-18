@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\ArchivedCasualEmployee;
 use App\Imports\CasualEmployeesImport;
 use App\Http\Controllers\CasualEmployeesImportController;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Exports\ExportCasualEmployees;
+
+
 
 class CasualEmployeeController extends Controller
 {
@@ -251,6 +255,14 @@ public function upload(Request $request)
 
     return redirect('/dashboard')->with('success', 'Casual employees onboarded successfully!');
 }
+public function exportCasualEmployees()
+    {
+        // Define the file name for the exported Excel file
+        $fileName = 'casual_employees.xlsx';
+
+        // Generate and return the Excel export
+        return Excel::download(new ExportCasualEmployees, $fileName);
+    }
 // filter functionality
     public function filter(Request $request)
     {
