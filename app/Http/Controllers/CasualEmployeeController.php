@@ -7,6 +7,7 @@ use App\Models\CasualEmployee;
 use Illuminate\Support\Facades\Session;
 use TCPDF;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\ArchivedCasualEmployee;
 
 class CasualEmployeeController extends Controller
 {
@@ -204,5 +205,26 @@ public function handleFileDownload()
         return redirect()->back()->with('error', 'No file to download.');
     }
 }
+public function offboard(CasualEmployee $casualEmployee)
+{
+    // Update the status of the casual employee to indicate departure
+    $casualEmployee->update([
+        'status' => 'Departed',
+        'departure_date' => now(), // Assuming 'departure_date' is a column in your database
+        // You can add more fields as needed, such as 'reason_for_leaving'
+    ]);
+
+    // Archive the employee's profile and associated data
+    $archivedEmployeeData = $casualEmployee->toArray();
+    unset($archivedEmployeeData['id']); // Remove the original ID
+    ArchivedCasualEmployee::create($archivedEmployeeData);
+
+    // Delete the casual employee from the active employees table
+    $casualEmployee->delete();
+
+    // Redirect back to the dashboard with a success message
+    return redirect('/dashboard')->with('success', 'Casual employee offboarded successfully!');
+}
+
 }
 

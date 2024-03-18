@@ -38,6 +38,7 @@ Route::middleware([
 
 
 Route::post('/casuals/onboard', [CasualEmployeeController::class, 'onboard'])->name('casuals.onboard');
+Route::get('/bulk-onboard', [BulkOnboardController::class, 'showBulkOnboardForm'])->name('bulk.onboard.form');
 Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard');
 Route::get('/casuals/{casualEmployee}/edit', [CasualEmployeeController::class, 'edit'])->name('casuals.edit');
 Route::put('/casuals/{casualEmployee}', [CasualEmployeeController::class, 'update'])->name('casuals.update');
@@ -51,7 +52,7 @@ Route::get('/generate-pdf/{casualEmployee}', [PDFController::class, 'generatePDF
 Route::get('/casual-employees/{id}/download-form', [CasualEmployeeController::class, 'downloadPDF'])->name('download.form');
 Route::get('/casual-employees/{casualEmployee}/download-form', [CasualEmployeeController::class, 'downloadForm'])->name('casual_employee.downloadForm');
 Route::get('/download-file', [CasualEmployeeController::class, 'downloadFile'])->name('download.file');
-Route::get('/bulk-onboard', [BulkOnboardController::class, 'showBulkOnboardForm'])->name('bulk.onboard.form');
+
 // Route::get('/bulk-;nboard ',[BulkOnboardController::class, 'bulkOnboard'])->name('bulk.oboard' );
 // Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard');
 // Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard.form');

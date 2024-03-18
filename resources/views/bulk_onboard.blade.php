@@ -11,7 +11,7 @@
                     <div class="card-body">
 
                         <!-- bulk_onboard.blade.php -->
-<form id="bulkOnboardForm" method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
+<form id="bulkOnboardForm" method="POST" action="{{route('bulk.onboard')}}" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="file">{{ __('Upload Excel File') }}</label>

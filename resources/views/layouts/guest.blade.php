@@ -13,15 +13,16 @@
           <!-- Styles -->
           <link rel="stylesheet" href="{{ asset('css/app.css') }}">
           @livewireStyles
-      
+
           <!-- Scripts -->
           <script src="{{ asset('js/app.js') }}" defer></script>
-      
+
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">
-            {{ $slot }}
+            {{ @$slot }}
+            @yield('content')
         </div>
         @livewireScripts
     </body>
-</html
+</html>

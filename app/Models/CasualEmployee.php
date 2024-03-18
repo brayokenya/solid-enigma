@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 
 class CasualEmployee extends Model
 {
-    protected $table = 'casual_employees'; // Assuming your table name is 'casual_employees'
+    protected $table = 'casual_employees';
 
     protected $fillable = [
         'first_name',
@@ -44,5 +44,8 @@ class CasualEmployee extends Model
         return validator($data, self::$validationRules, self::$validationMessages)->validate();
     }
 
-    // Define any relationships or additional methods here
+    public function archivedEmployee()
+    {
+        return $this->hasOne(ArchivedCasualEmployee::class);
+    }
 }

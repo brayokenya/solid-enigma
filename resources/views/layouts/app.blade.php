@@ -13,9 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
          <!-- Scripts -->
-   
+
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -36,7 +36,8 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                {{ @$slot }}
+                @yield('content')
             </main>
         </div>
 
