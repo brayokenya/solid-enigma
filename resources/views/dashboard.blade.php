@@ -213,6 +213,10 @@
                                         <a href="{{ route('download.form', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
                                     </td>
                                 </tr>
+                                <!-- Casual employees list -->
+                                <div class="casuals-list">
+                                    <!-- Display casual employees here -->
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>

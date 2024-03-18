@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CasualEmployee;
 use Illuminate\Support\Facades\Session;
 use TCPDF;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\ArchivedCasualEmployee;
 
@@ -225,6 +226,55 @@ public function offboard(CasualEmployee $casualEmployee)
     // Redirect back to the dashboard with a success message
     return redirect('/dashboard')->with('success', 'Casual employee offboarded successfully!');
 }
-
+// EXcel sheet functionality
+public function showUploadForm()
+{
+    return view('upload_form');
 }
+
+public function upload(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ]);
+
+    $file = $request->file('file');
+
+    // Parse Excel file and import data
+    Excel::import(new CasualEmployeesImport, $file);
+
+    return redirect('/dashboard')->with('success', 'Casual employees onboarded successfully!');
+}
+// filter functionality
+    public function filter(Request $request)
+    {
+        // Retrieve filter criteria from the request
+        $criteria = $request->only(['name', 'department', 'status']);
+
+        // Initialize query builder for CasualEmployee model
+        $query = CasualEmployee::query();
+
+        // Apply filters based on criteria
+        if ($request->has('name')) {
+            $query->where('first_name', 'like', '%' . $criteria['name'] . '%')
+                  ->orWhere('last_name', 'like', '%' . $criteria['name'] . '%');
+        }
+
+        if ($request->has('department')) {
+            $query->where('department', $criteria['department']);
+        }
+
+        if ($request->has('status')) {
+            $query->where('status', $criteria['status']);
+        }
+
+        // Fetch filtered casual employees
+        $filteredEmployees = $query->get();
+
+        // Pass filtered employees to the view
+        return view('casuals.index', ['casualEmployees' => $filteredEmployees]);
+    }
+}
+
+
 
