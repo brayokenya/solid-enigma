@@ -9,6 +9,8 @@ use TCPDF;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\ArchivedCasualEmployee;
+use App\Imports\CasualEmployeesImport;
+use App\Http\Controllers\CasualEmployeesImportController;
 
 class CasualEmployeeController extends Controller
 {
@@ -234,6 +236,10 @@ public function showUploadForm()
 
 public function upload(Request $request)
 {
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ]);
+// Validate the uploaded file
     $request->validate([
         'file' => 'required|mimes:xlsx,xls',
     ]);

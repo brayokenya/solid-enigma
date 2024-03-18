@@ -8,6 +8,7 @@ use App\Http\Controllers\BulkOnboardController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\CasualEmployeesImportController;
 
 
 /*
@@ -54,11 +55,13 @@ Route::get('/casual-employees/{casualEmployee}/download-form', [CasualEmployeeCo
 Route::get('/download-file', [CasualEmployeeController::class, 'downloadFile'])->name('download.file');
 Route::put('/casuals/{casualEmployee}/offboard', 'CasualEmployeeController@offboard')->name('casuals.offboard');
 Route::get('/casuals/filter', 'CasualEmployeeController@filter')->name('casuals.filter');
+// Route::post('/import-casual-employees', [CasualEmployeesImportController::class, 'import'])->name('import.casual.employees');
+Route::post('/import-casual-employees', [CasualEmployeesImportController::class, 'import'])
+    ->name('import.casual.employees');
+    Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('casual.upload.form');
+    Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('casual.upload');
 
-
-// Route::get('/bulk-;nboard ',[BulkOnboardController::class, 'bulkOnboard'])->name('bulk.oboard' );
-// Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard');
-// Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard.form');
-// Route::get('/bulk-onboard', [BulkOnboardController::class, 'showBulkOnboardForm'])->name('bulk.oboard');
+    // Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('upload.form');
+    // Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('upload');
 
 

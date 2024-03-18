@@ -96,6 +96,37 @@
                         </div>
                     </form>
                 </div>
+                {{-- excel form --}}
+                <div class="container">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <div class="p-6">
+                        <form action="{{ route('import.casual.employees') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="file">Choose Excel File:</label>
+                                <input type="file" name="file" class="form-control-file" id="file">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </form>
+                    </div>
+                </div>
+                {{-- UPLOAD THE EXCEL SHEET --}}
+                <div class="container">
+                    <!-- Display success message if any -->
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <!-- Include the upload form -->
+                    @include('upload_form')
+                </div>
+
                 <!-- List of Casual Employees -->
                 <div class="p-6">
                     <h2 class="text-lg font-semibold mb-4">List of Casual Employees</h2>
