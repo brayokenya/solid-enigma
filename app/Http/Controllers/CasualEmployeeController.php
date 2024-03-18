@@ -10,9 +10,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\ArchivedCasualEmployee;
 use App\Imports\CasualEmployeesImport;
+use App\Http\Controllers\CasualEmployeesExport;
 use App\Http\Controllers\CasualEmployeesImportController;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use App\Exports\ExportCasualEmployees;
+use App\Models\Timetracking;
+use Pdf;
 
 
 
@@ -263,35 +266,17 @@ public function exportCasualEmployees()
         // Generate and return the Excel export
         return Excel::download(new ExportCasualEmployees, $fileName);
     }
-// filter functionality
-    public function filter(Request $request)
-    {
-        // Retrieve filter criteria from the request
-        $criteria = $request->only(['name', 'department', 'status']);
+    public function exportToExcel()
+{
+    return Excel::download(new CasualEmployeesExport, 'casual_employees.xlsx');
+}
 
-        // Initialize query builder for CasualEmployee model
-        $query = CasualEmployee::query();
-
-        // Apply filters based on criteria
-        if ($request->has('name')) {
-            $query->where('first_name', 'like', '%' . $criteria['name'] . '%')
-                  ->orWhere('last_name', 'like', '%' . $criteria['name'] . '%');
-        }
-
-        if ($request->has('department')) {
-            $query->where('department', $criteria['department']);
-        }
-
-        if ($request->has('status')) {
-            $query->where('status', $criteria['status']);
-        }
-
-        // Fetch filtered casual employees
-        $filteredEmployees = $query->get();
-
-        // Pass filtered employees to the view
-        return view('casuals.index', ['casualEmployees' => $filteredEmployees]);
-    }
+public function exportToPDF()
+{
+    $casualEmployees = CasualEmployee::all();
+    $pdf = PDF::loadView('casual_employees.pdf', compact('casualEmployees'));
+    return $pdf->download('casual_employees.pdf');
+}
 }
 
 

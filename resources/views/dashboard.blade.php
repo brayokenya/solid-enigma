@@ -244,6 +244,10 @@
                                         <a href="{{ route('download.form', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
                                     </td>
                                 </tr>
+                                <!-- Include buttons to trigger export -->
+                            <a href="{{ route('casual-employees.export.excel') }}" class="btn btn-success">Export to Excel</a>
+                            <a href="{{ route('casual-employees.export.pdf') }}" class="btn btn-danger">Export to PDF</a>
+
                                 <!-- Casual employees list -->
                                 <div class="casuals-list">
                                     <!-- Display casual employees here -->

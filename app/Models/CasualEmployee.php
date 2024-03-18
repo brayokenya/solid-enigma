@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Timetracking;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -48,4 +49,10 @@ class CasualEmployee extends Model
     {
         return $this->hasOne(ArchivedCasualEmployee::class);
     }
+
+        public function timetrackings()
+    {
+        return $this->hasMany(Timetracking::class, 'employee_id');
+    }
+    
 }

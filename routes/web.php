@@ -9,6 +9,7 @@ use App\Http\Controllers\PDFController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\CasualEmployeesImportController;
+use App\Http\Controllers\TimetrackingController;
 
 
 /*
@@ -55,11 +56,19 @@ Route::get('/casual-employees/{casualEmployee}/download-form', [CasualEmployeeCo
 Route::get('/download-file', [CasualEmployeeController::class, 'downloadFile'])->name('download.file');
 Route::put('/casuals/{casualEmployee}/offboard', 'CasualEmployeeController@offboard')->name('casuals.offboard');
 Route::get('/casuals/filter', 'CasualEmployeeController@filter')->name('casuals.filter');
-// Route::post('/import-casual-employees', [CasualEmployeesImportController::class, 'import'])->name('import.casual.employees');
+Route::get('/download-pdf', [CasualEmployeeController::class, 'exportToPDF'])->name('download.pdf');
+
 Route::post('/import-casual-employees', [CasualEmployeesImportController::class, 'import'])
     ->name('import.casual.employees');
-    Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('casual.upload.form');
-    Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('casual.upload');
+    Route::get('/casual-employees/export/excel', [CasualEmployeeController::class, 'exportToExcel'])->name('casual-employees.export.excel');
+Route::get('/casual-employees/export/pdf', [CasualEmployeeController::class, 'exportToPDF'])->name('casual-employees.export.pdf');
+Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('casual.upload.form');
+Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('casual.upload');
+Route::get('/timetrackings', [TimetrackingController::class, 'index'])->name('timetrackings.index');
+Route::get('/timetrackings/export/excel', [TimetrackingController::class, 'exportToExcel'])->name('timetrackings.export.excel');
+Route::get('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
+
+
 
     // Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('upload.form');
     // Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('upload');
