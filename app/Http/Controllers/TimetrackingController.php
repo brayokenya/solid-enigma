@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Timetracking;
 use App\Exports\TimetrackingsExport;
+// use Barryvdh\DomPDF\Facade as PDF;
+use App\Models\CasualEmployee;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Redirect;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 class TimetrackingController extends Controller
 {
     /**
@@ -66,7 +73,22 @@ class TimetrackingController extends Controller
         // Return the view with the specified time tracking data
         return view('timetrackings.show', compact('timetracking'));
     }
+     /**
+     * Export time tracking entries to Excel.
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportToExcel()
+    {
+        return Excel::download(new TimetrackingsExport, 'timetrackings.xlsx');
+    }
 
+    public function exportToPDF()
+    {
+        $timetrackings = Timetracking::all();
+        $pdf = PDF::loadView('timetrackings.pdf', compact('timetrackings'));
+        return $pdf->download('timetrackings.pdf');
+    }
     public function filter(Request $request)
     {
         // Validate the request data

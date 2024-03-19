@@ -15,9 +15,7 @@ use App\Http\Controllers\CasualEmployeesImportController;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use App\Exports\ExportCasualEmployees;
 use App\Models\Timetracking;
-use Pdf;
-
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CasualEmployeeController extends Controller
 {
@@ -267,17 +265,26 @@ public function exportCasualEmployees()
         return Excel::download(new ExportCasualEmployees, $fileName);
     }
     public function exportToExcel()
-{
-    return Excel::download(new CasualEmployeesExport, 'casual_employees.xlsx');
-}
+    {
+        return Excel::download(new ExportCasualEmployees, 'casual_employees.xlsx');
+    }
+    public function exportToPDF(Request $request)
+    {
+        // Retrieve data for PDF export (if needed)
+        $casualEmployees = CasualEmployee::all();
 
-public function exportToPDF()
-{
-    $casualEmployees = CasualEmployee::all();
-    $pdf = PDF::loadView('casual_employees.pdf', compact('casualEmployees'));
-    return $pdf->download('casual_employees.pdf');
-}
-}
+        // Generate PDF using DomPDF
+        $pdf = PDF::loadView('casual_employees.pdf', compact('casualEmployees'));
 
+        // Return PDF as a response
+        return $pdf->download('casual_employees.pdf');
+    }
+   
+    public function showDownloadForm(CasualEmployee $casualEmployee)
+    {
+        // Pass the casual employee data to the view
+        return view('download_form', compact('casualEmployee'));
+    }
 
+    }
 
