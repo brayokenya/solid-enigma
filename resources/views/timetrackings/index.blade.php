@@ -9,7 +9,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>From Date</th>  
+                    <th>From Date</th>
                     <th>To Date</th>
                     <th>Code</th>
                     <th>Department</th>
@@ -57,7 +57,7 @@
                     <!-- Sidebar content -->
                 </div>
             </div>
-            
+
         </table>
         <div class="container">
             <!-- Display time tracking entries here -->
@@ -118,6 +118,47 @@
                 </table>
             </div>
         </div>
+            </table>
+        </div>
+        <div class="container">
+            <h1>Time Tracking Entries</h1>
+
+            <!-- Clock in form -->
+            <form action="{{ route('clock.in') }}" method="post">
+                @csrf
+                <label for="employee_id">Employee ID for Clock In:</label>
+                <input type="text" name="employee_id" id="employee_id">
+                <button type="submit">Clock In</button>
+            </form>
+
+            <!-- Clock out form -->
+            <form action="{{ route('clock.out') }}" method="post">
+                @csrf
+                <label for="employee_id">Employee ID for Clock Out:</label>
+                <input type="text" name="employee_id" id="employee_id">
+                <button type="submit">Clock Out</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Code</th>
+                        <th>Department</th>
+                        <th>ID Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($timetrackings as $timetracking)
+                        <tr>
+                            <td>{{ $timetracking->employee->FromDate }}</td>
+                            <td>{{ $timetracking->employee->ToDate }}</td>
+                            <td>{{ $timetracking->Code }}</td>
+                            <td>{{ $timetracking->Department }}</td>
+                            <td>{{ $timetracking->IDNumber }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>

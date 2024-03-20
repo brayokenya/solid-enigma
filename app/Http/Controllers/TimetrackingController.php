@@ -85,49 +85,50 @@ class TimetrackingController extends Controller
     {
         return Excel::download(new TimetrackingsExport, 'timetrackings.xlsx');
     }
-    public function downloadForm(Timetracking $timetracking)
+    public function downloadForm(Timetracking $timetrackings)
     {
         // Create a new TCPDF instance
         $pdf = new TCPDF();
-    
+
         // Set document information
         $pdf->SetCreator('Your Name');
         $pdf->SetAuthor('Your Name');
         $pdf->SetTitle('Timetrackings');
         $pdf->SetSubject('Timetrackingss');
-    
+
         // Add a page
         $pdf->AddPage();
 
         // Set font
         $pdf->SetFont('helvetica', '', 12);
-    
+
         // Add content to the PDF
-        $pdf->writeHTML("First Name: $timetracking->first_name <br>");
-        $pdf->writeHTML("Last Name: $timetracking->last_name <br>");
+        $pdf->writeHTML("First Name: $timetrackings->first_name <br>");
+        $pdf->writeHTML("Last Name: $timetrackings->last_name <br>");
         // Add more fields as needed...
-    
+
         // Output the PDF as a file
-        $pdf->Output(public_path('pdfs/timetrackings.pdf'), 'F');
-    
+        $pdf->Output(public_path('pdfs/timetrackings_pdf'), 'F');
+
         // Set flash session with the file name for download
-        Session::flash('download.in.the.next.request', 'timetrackings.pdf');
-    
+        Session::flash('download.in.the.next.request', 'timetrackings_pdf');
+
         // Redirect back to the dashboard with a success message
         return redirect('timetrackings.index')->with('success', 'PDF generated successfully!');
     }
     public function exportToPDF()
     {
         $timetrackings = Timetracking::all();
-    
+
         // Generate PDF using DomPDF
-        $pdf = PDF::loadView('timetrackings.pdf', compact('timetrackings'));
-    
+        $pdf = PDF::loadView('timetrackings_pdf', compact('timetrackings'));
+
         // Save the PDF file to the public/pdf folder
-        $pdf->save(public_path('pdf/timetrackings.pdf'));
-    
+        // $pdf->save(public_path('pdf/timetrackings_pdf'));
+
+        return $pdf->download('timetrackings_pdf');
         // Optionally, you can return a response indicating success
-        return Response::make('PDF file generated and saved successfully.', 200);
+        // return Response::make('PDF file generated and saved successfully.', 200);
 
     // Generate PDF using DomPDF
     }
@@ -155,4 +156,44 @@ class TimetrackingController extends Controller
         // Pass the filtered timetrackings data to the view
         return view('timetrackings.index', ['timetrackings' => $timetrackings]);
     }
+    public function clockIn(Request $request)
+    {
+        // Validate request data
+        $request->validate([
+            'employee_id' => 'required|exists:casual_employees,id',
+        ]);
+
+        // Create a new time tracking entry for clock in
+        Timetracking::create([
+            'employee_id' => $request->employee_id,
+            'clock_in' => now(), // Use current server time for clock in
+            'date' => now()->toDateString(),
+        ]);
+
+        return response()->json(['message' => 'Clock in successful'], 200);
+    }
+
+    public function clockOut(Request $request)
+    {
+        // Validate request data
+        $request->validate([
+            'employee_id' => 'required|exists:casual_employees,id',
+        ]);
+
+        // Find the latest time tracking entry for the employee
+        $timeTracking = Timetracking::where('employee_id', $request->employee_id)
+            ->whereDate('created_at', now()->toDateString())
+            ->latest()
+            ->first();
+
+        if ($timeTracking) {
+            // Update the clock out time
+            $timeTracking->update(['clock_out' => now()]); // Use current server time for clock out
+            return response()->json(['message' => 'Clock out successful'], 200);
+        }
+
+        return response()->json(['message' => 'No clock in found for the employee today'], 404);
+    }
+
+
 }

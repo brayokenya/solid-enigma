@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('timetracking', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('casual_employees');
+            // $table->foreignId('employee_id')->constrained('casual_employees');
             $table->dateTime('clock_in');
             $table->dateTime('clock_out')->nullable();
             $table->date('date');
+            $table->foreignId('employee_id')->constrained('casual_employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

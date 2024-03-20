@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -33,4 +33,38 @@
             </tbody>
         </table>
     </div>
-@endsection
+@endsection --}}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Tracking Entries</title>
+    <!-- Add any necessary meta tags, styles, or scripts here -->
+</head>
+<body>
+    <h1>Time Tracking Entries</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Code</th>
+                <th>Department</th>
+                <th>ID Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($timetrackings as $timetracking)
+                <tr>
+                    <td>{{ $timetracking->FromDate }}</td>
+                    <td>{{ $timetracking->ToDate }}</td>
+                    <td>{{ $timetracking->Code }}</td>
+                    <td>{{ $timetracking->Department }}</td>
+                    <td>{{ $timetracking->IDNumber }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
+</html>

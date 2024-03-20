@@ -66,14 +66,17 @@ Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])-
 Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('casual.upload');
 Route::get('/timetrackings', [TimetrackingController::class, 'index'])->name('timetrackings.index');
 Route::get('/timetrackings/export/excel', [TimetrackingController::class, 'exportToExcel'])->name('timetrackings.export.excel');
-Route::get('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
-Route::post('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
 Route::get('/timetrackings/export/pdf', [TimeTrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
-
+Route::get('/timetrackings', [TimetrackingController::class, 'index'])->name('timetrackings.index');
+Route::get('/timetrackings/export/excel', [TimetrackingController::class, 'exportToExcel'])->name('timetrackings.export.excel');
+Route::get('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
+Route::get('/clock-in', [TimeTrackingController::class, 'clockIn'])->name('clock.in');
+Route::post('/clock-out', [TimeTrackingController::class, 'clockOut'])->name('clock.out');
 Route::get('/compensations', [CompensationController::class, 'index'])->name('compensations.index');
 Route::post('/compensations', [CompensationController::class, 'store'])->name('compensations.store');
 Route::put('/compensations/{compensation}/approve', [CompensationController::class, 'approve'])->name('compensations.approve');
 Route::get('/compensations/payment-sheet', [CompensationController::class, 'generatePaymentSheet'])->name('compensations.payment-sheet');
-
+Route::post('/compensations/process-bulk', [CompensationController::class, 'processBulk'])->name('compensations.process-bulk');
+Route::get('/clock-in', [TimeTrackingController::class, 'clockIn'])->name('clock.in');
 
 

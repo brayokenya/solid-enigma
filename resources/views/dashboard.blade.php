@@ -16,7 +16,7 @@
                 link.click();
             </script>
         @endif
-
+        <a href="{{ route('clock.in') }}" class="btn btn-primary">Clock In</a>
     {{-- </div>
     <td class="px-6 py-4 whitespace-nowrap">
         <a href="{{ route('download.form', $casualEmployee->id) }}" class="btn btn-primary">Download Form</a>
