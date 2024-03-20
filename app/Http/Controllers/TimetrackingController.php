@@ -10,6 +10,9 @@ use App\Models\CasualEmployee;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
+use TCPDF;
+use Illuminate\Support\Facades\Session;
 
 
 class TimetrackingController extends Controller
@@ -82,13 +85,49 @@ class TimetrackingController extends Controller
     {
         return Excel::download(new TimetrackingsExport, 'timetrackings.xlsx');
     }
+    public function downloadForm(Timetracking $timetracking)
+    {
+        // Create a new TCPDF instance
+        $pdf = new TCPDF();
+    
+        // Set document information
+        $pdf->SetCreator('Your Name');
+        $pdf->SetAuthor('Your Name');
+        $pdf->SetTitle('Timetrackings');
+        $pdf->SetSubject('Timetrackingss');
+    
+        // Add a page
+        $pdf->AddPage();
 
+        // Set font
+        $pdf->SetFont('helvetica', '', 12);
+    
+        // Add content to the PDF
+        $pdf->writeHTML("First Name: $timetracking->first_name <br>");
+        $pdf->writeHTML("Last Name: $timetracking->last_name <br>");
+        // Add more fields as needed...
+    
+        // Output the PDF as a file
+        $pdf->Output(public_path('pdfs/timetrackings.pdf'), 'F');
+    
+        // Set flash session with the file name for download
+        Session::flash('download.in.the.next.request', 'timetrackings.pdf');
+    
+        // Redirect back to the dashboard with a success message
+        return redirect('timetrackings.index')->with('success', 'PDF generated successfully!');
+    }
     public function exportToPDF()
     {
         $timetrackings = Timetracking::all();
+    
+        // Generate PDF using DomPDF
         $pdf = PDF::loadView('timetrackings.pdf', compact('timetrackings'));
-        return $pdf->download('timetrackings.pdf');
-        $timetrackings = Timetracking::all();
+    
+        // Save the PDF file to the public/pdf folder
+        $pdf->save(public_path('pdf/timetrackings.pdf'));
+    
+        // Optionally, you can return a response indicating success
+        return Response::make('PDF file generated and saved successfully.', 200);
 
     // Generate PDF using DomPDF
     }

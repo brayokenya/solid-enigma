@@ -279,7 +279,7 @@ public function exportCasualEmployees()
         // Return PDF as a response
         return $pdf->download('casual_employees.pdf');
     }
-   
+    
     public function showDownloadForm(CasualEmployee $casualEmployee)
     {
         // Pass the casual employee data to the view

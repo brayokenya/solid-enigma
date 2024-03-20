@@ -68,6 +68,7 @@ Route::get('/timetrackings', [TimetrackingController::class, 'index'])->name('ti
 Route::get('/timetrackings/export/excel', [TimetrackingController::class, 'exportToExcel'])->name('timetrackings.export.excel');
 Route::get('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
 Route::post('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
+Route::get('/timetrackings/export/pdf', [TimeTrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
 
 Route::get('/compensations', [CompensationController::class, 'index'])->name('compensations.index');
 Route::post('/compensations', [CompensationController::class, 'store'])->name('compensations.store');
