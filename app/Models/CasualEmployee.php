@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Timetracking;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
+use App\Models\Compensation;
 
 class CasualEmployee extends Model
 {
@@ -54,5 +55,13 @@ class CasualEmployee extends Model
     {
         return $this->hasMany(Timetracking::class, 'employee_id');
     }
+
+    // {
+    //     protected $fillable = ['name', 'email', 'designation'];
+
+        public function compensations()
+        {
+            return $this->hasMany(Compensation::class);
+        }
     
 }

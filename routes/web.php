@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\CasualEmployeesImportController;
 use App\Http\Controllers\TimetrackingController;
-
+use App\Http\Controllers\CompensationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +67,10 @@ Route::post('/upload', [CasualEmployeeController::class, 'upload'])->name('casua
 Route::get('/timetrackings', [TimetrackingController::class, 'index'])->name('timetrackings.index');
 Route::get('/timetrackings/export/excel', [TimetrackingController::class, 'exportToExcel'])->name('timetrackings.export.excel');
 Route::post('/timetrackings/export/pdf', [TimetrackingController::class, 'exportToPDF'])->name('timetrackings.export.pdf');
-
+Route::get('/compensations', [CompensationController::class, 'index']);
+Route::post('/compensations', [CompensationController::class, 'store']);
+Route::put('/compensations/{compensation}/approve', [CompensationController::class, 'approve']);
+Route::get('/compensations/payment-sheet', [CompensationController::class, 'generatePaymentSheet']);
 
 
     // Route::get('/upload-form', [CasualEmployeeController::class, 'showUploadForm'])->name('upload.form');

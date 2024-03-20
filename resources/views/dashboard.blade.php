@@ -177,7 +177,7 @@
 
                                     <!-- Add similar th elements for other fields -->
                                 </tr>
-                                <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
+                                {{-- <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="form-group">
@@ -188,7 +188,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>

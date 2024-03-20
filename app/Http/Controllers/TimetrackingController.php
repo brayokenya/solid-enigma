@@ -88,6 +88,9 @@ class TimetrackingController extends Controller
         $timetrackings = Timetracking::all();
         $pdf = PDF::loadView('timetrackings.pdf', compact('timetrackings'));
         return $pdf->download('timetrackings.pdf');
+        $timetrackings = Timetracking::all();
+
+    // Generate PDF using DomPDF
     }
     public function filter(Request $request)
     {

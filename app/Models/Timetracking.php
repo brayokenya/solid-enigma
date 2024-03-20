@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Timetracking extends Model
 {
     use HasFactory;
+
+    protected $table = 'timetracking';
     /**
      * The attributes that are mass assignable.
      *
@@ -26,5 +28,6 @@ class Timetracking extends Model
     public function employee()
     {
         return $this->belongsTo(CasualEmployee::class, 'employee_id');
+
     }
 }
