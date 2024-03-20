@@ -120,7 +120,7 @@
         </div>
             </table>
         </div>
-        <div class="container">
+        {{-- <div class="container">
             <h1>Time Tracking Entries</h1>
 
             <!-- Clock in form -->
@@ -160,6 +160,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        </div> --}}
+        
     </div>
 @endsection

@@ -106,13 +106,13 @@
                     <div class="p-6">
                         <form action="{{ route('import.casual.employees') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="file">Choose Excel File:</label>
                                 <input type="file" name="file" class="form-control-file" id="file">
                             </div>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
                 {{-- UPLOAD THE EXCEL SHEET --}}
                 <div class="container">
@@ -129,7 +129,7 @@
 
                 <!-- List of Casual Employees -->
                 <div class="p-6">
-                    <h2 class="text-lg font-semibold mb-4">List of Casual Employees</h2>
+                    {{-- <h2 class="text-lg font-semibold mb-4">List of Casual Employees</h2> --}}
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
@@ -190,16 +190,16 @@
                                         @enderror
                                     </div> --}}
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button>
+                                </form> --}}
                                 <div class="py-12">
                                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                                            <form action="{{ route('bulk.onboard') }}" method="POST" enctype="multipart/form-data">
+                                            {{-- <form action="{{ route('bulk.onboard') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="file" accept=".xlsx, .xls">
                                                 <button type="submit">Upload File</button>
-                                            </form>
+                                            </form> --}}
 
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
