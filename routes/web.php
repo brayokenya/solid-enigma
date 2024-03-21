@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\View;
 use App\Http\Controllers\CasualEmployeesImportController;
 use App\Http\Controllers\TimetrackingController;
 use App\Http\Controllers\CompensationController;
+use App\Http\Controllers\CasualEmployeeProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +38,10 @@ Route::middleware([
 });
 
 
-
-
+Route::get('/casual-employees', [CasualEmployeeController::class, 'index'])->name('casual-employees.index');
+Route::get('/casual-employee-profiles/create', [CasualEmployeeProfileController::class, 'create'])->name('casual_employee_profiles.create');
+Route::post('/casual-employee-profiles', [CasualEmployeeProfileController::class, 'store'])->name('casual_employee_profiles.store');
+Route::get('/casual-employee-profiles/{id}', [CasualEmployeeProfileController::class, 'show'])->name('casual_employee_profiles.show');
 Route::post('/casuals/onboard', [CasualEmployeeController::class, 'onboard'])->name('casuals.onboard');
 Route::get('/bulk-onboard', [BulkOnboardController::class, 'showBulkOnboardForm'])->name('bulk.onboard.form');
 Route::post('/bulk-onboard', [BulkOnboardController::class, 'bulkOnboard'])->name('bulk.onboard');

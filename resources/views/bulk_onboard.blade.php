@@ -15,20 +15,41 @@
     @csrf
     <div class="form-group">
         <label for="file">{{ __('Upload Excel File') }}</label>
-        <input id="file" type="file" class="form-control-file" name="file" required>
+        <input type="file" id="file" accept=".xlsx, .xls, .csv" onchange="checkfile(this);" name="file" required>
+        {{-- <input type="file" accept=".xlsx, .xls, .csv"/> --}}
+        {{-- {<input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        <input id="file" type="file" class="form-control-file" name="file" required> --}}
         @error('file')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
     </div>
-
     <button type="button" onclick="submitForm()" class="btn btn-primary">
         {{ __('Submit') }}
     </button>
 </form>
 
 <script>
+
+    function checkfile(sender) {
+        var validExts = [".xlsx", ".xls"];
+        var fileExt = sender.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+        if (validExts.indexOf(fileExt) < 0) {
+            alert("Invalid file selected, valid files are of " +
+                validExts.toString() + " types.");
+            document.getElementById("form-id").reset();
+            return false;
+        } else return true;
+    }
+    function submitForm() {
+  let x = document.forms["bulkOnboardForm"]["fname"].value;
+  if (x == "") {
+    alert("Must be excel file");
+    return false;
+  }
+}
     function submitForm() {
         // Get the form data
         let formData = new FormData(document.getElementById('bulkOnboardForm'));

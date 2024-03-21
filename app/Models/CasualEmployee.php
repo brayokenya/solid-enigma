@@ -6,6 +6,7 @@ use App\Models\Timetracking;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use App\Models\Compensation;
+use App\Models\CasualEmployeeProfile;
 
 class CasualEmployee extends Model
 {
@@ -63,5 +64,8 @@ class CasualEmployee extends Model
         {
             return $this->hasMany(Compensation::class);
         }
-    
+        public function profile()
+        {
+            return $this->hasOne(CasualEmployeeProfile::class);
+        }
 }

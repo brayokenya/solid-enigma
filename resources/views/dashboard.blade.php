@@ -4,10 +4,21 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
         <!-- In your view file -->
         @if(Session::has('download.in.the.next.request'))
             <script>
+                // for excel upload
+                function checkfile(sender) {
+        var validExts = [".xlsx", ".xls"];
+        var fileExt = sender.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+        if (validExts.indexOf(fileExt) < 0) {
+            alert("Invalid file selected, valid files are of " +
+                validExts.toString() + " types.");
+            document.getElementById("form-id").reset();
+            return false;
+        } else return true;
+    }
                 // Create a hidden link and trigger the download
                 var link = document.createElement('a');
                 link.href = 'casual_employee_details.pdf' + '{{ Session::get('download.in.the.next.request') }}';
@@ -106,13 +117,14 @@
                     <div class="p-6">
                         <form action="{{ route('import.casual.employees') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="file">Choose Excel File:</label>
-                                <input type="file" name="file" class="form-control-file" id="file">
+                                <input type="file" id="file" accept=".xlsx, .xls, .csv" onchange="checkfile(this);" name="file" required>
+                                {{-- <input type="file" name="file" class="form-control-file" id="file"> --}}
                             </div>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </form>
-                    </div> --}}
+                    </div>
                 </div>
                 {{-- UPLOAD THE EXCEL SHEET --}}
                 <div class="container">
@@ -124,7 +136,7 @@
                     @endif
 
                     <!-- Include the upload form -->
-                    @include('upload_form')
+                    {{-- @include('upload_form') --}}
                 </div>
 
                 <!-- List of Casual Employees -->
@@ -177,6 +189,9 @@
 
                                     <!-- Add similar th elements for other fields -->
                                 </tr>
+
+                                {{-- <a href="{{ route('casuals.profile.bulk') }}" class="btn btn-primary">Bulk Onboard Employees</a> --}}
+
                                 {{-- <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
                                     @csrf
 

@@ -17,6 +17,7 @@ use App\Exports\ExportCasualEmployees;
 use App\Models\Timetracking;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 class CasualEmployeeController extends Controller
 {
     /**
@@ -58,13 +59,11 @@ class CasualEmployeeController extends Controller
             'gender' => ['required', 'string'],
             'department' => ['required', 'string'],
             'rate_per_day' => ['required', 'numeric'],
-            // Add validation rules for other fields here
+
         ]);
 
-        // Update the casual employee with the validated data
-        $casualEmployee->update($validatedData);
+         $casualEmployee->update($validatedData);
 
-        // Redirect back to the dashboard with a success message
         return redirect('/dashboard')->with('success', 'Casual employee updated successfully!');
     }
 
@@ -88,11 +87,8 @@ class CasualEmployeeController extends Controller
             'department' => ['required', 'string'],
             'rate_per_day' => ['required', 'numeric'],
         ]);
-
-        // Create a new CasualEmployee instance and save it to the database
         CasualEmployee::create($validatedData);
 
-        // Redirect back to the dashboard with a success message
         return redirect('/dashboard')->with('success', 'Casual employee onboarded successfully!');
     }
 
@@ -100,16 +96,37 @@ class CasualEmployeeController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+      */
     public function index()
 {
-    // Retrieve all casual employees from the database
     $casualEmployees = CasualEmployee::all(['id', 'first_name', 'last_name', 'id_number', 'casual_code', 'branch', 'phone_number', 'gender', 'department', 'rate_per_day', 'status']);
-
-    // Pass casual employees data to the dashboard view
     return view('dashboard', ['casualEmployees' => $casualEmployees]);
 }
 // }
+// public function index(Request $request)
+//     {
+//         $casualEmployees = CasualEmployee::query();
+
+//         if ($request->has('name')) {
+//             $casualEmployees->where('name', 'like', '%' . $request->input('name') . '%');
+//         }
+
+//         if ($request->has('department')) {
+//             $casualEmployees->where('department', $request->input('department'));
+//         }
+
+//         if ($request->has('status')) {
+//             $casualEmployees->where('status', $request->input('status'));
+//         }
+
+//         $sortBy = $request->input('sort_by', 'name');
+//         $sortOrder = $request->input('sort_order', 'asc');
+//         $casualEmployees->orderBy($sortBy, $sortOrder);
+
+//         $casualEmployees = $casualEmployees->paginate(10);
+
+//         return view('casual-employees.index', compact('casualEmployees'));
+//     }
 
 public function downloadForm(CasualEmployee $casualEmployee)
 {
@@ -122,94 +139,73 @@ public function downloadForm(CasualEmployee $casualEmployee)
     $pdf->SetTitle('Casual Employee Details');
     $pdf->SetSubject('Casual Employee Details');
 
-    // Add a page
     $pdf->AddPage();
 
-    // Set font
     $pdf->SetFont('helvetica', '', 12);
 
-    // Add content to the PDF
     $pdf->writeHTML("First Name: $casualEmployee->first_name <br>");
     $pdf->writeHTML("Last Name: $casualEmployee->last_name <br>");
     // Add more fields as needed...
 
-    // Output the PDF as a file
     $pdf->Output(public_path('pdfs/casual_employee_details.pdf'), 'F');
 
-    // Set flash session with the file name for download
     Session::flash('download.in.the.next.request', 'casual_employee_details.pdf');
 
-    // Redirect back to the dashboard with a success message
     return redirect('/dashboard')->with('success', 'PDF generated successfully!');
 }
 public function downloadFile()
 {
-    // Retrieve the file name from the flash session
     $file_name = Session::get('download.in.the.next.request');
 
-    // Check if the file name exists
     if ($file_name) {
-        // Path to the file you want to download
+
         $file_path = public_path('pdfs/' . $file_name);
 
-        // Check if the file exists
         if (file_exists($file_path)) {
-            // Provide the file for download
             return response()->download($file_path, $file_name);
         } else {
-            // Redirect back with an error message if the file does not exist
             return redirect()->back()->with('error', 'File not found for download.');
         }
     } else {
-        // Redirect back with an error message if the flash session is not set
         return redirect()->back()->with('error', 'No file to download.');
     }
 }
 
 public function downloadPDF()
 {
-    // Path to the PDF file
-    $file_path = public_path('pdfs/casual_employee_details.pdf');
 
-    // Check if the file exists
+    $file_path = public_path('pdfs/casual_employee_details.pdf');
     if (file_exists($file_path)) {
-        // Provide the file for download
+
         return response()->download($file_path, 'casual_employee_details.pdf');
     } else {
-        // Redirect back with an error message if the file does not exist
+
         return redirect()->back()->with('error', 'PDF file not found.');
     }
 }
 
 public function initiateFileDownload()
 {
-    // Set the flash session with the file name
     Session::flash('download.in.the.next.request', 'casual_employee_details.pdf');
 
-    // Redirect to the page where the file download will be handled
     return Redirect::to('/dashboard');
 }
 
 public function handleFileDownload()
 {
-    // Retrieve the file name from the flash session
     $file_name = Session::get('download.in.the.next.request');
 
-    // Check if the file name exists
     if ($file_name) {
-        // Path to the file you want to download
         $file_path = public_path('pdfs/' . $file_name);
 
-        // Check if the file exists
         if (file_exists($file_path)) {
-            // Provide the file for download
+
             return response()->download($file_path, $file_name);
         } else {
-            // Redirect back with an error message if the file does not exist
+
             return redirect()->back()->with('error', 'File not found for download.');
         }
     } else {
-        // Redirect back with an error message if the flash session is not set
         return redirect()->back()->with('error', 'No file to download.');
     }
 }
@@ -279,12 +275,15 @@ public function exportCasualEmployees()
         // Return PDF as a response
         return $pdf->download('casual_employees.pdf');
     }
-    
+
     public function showDownloadForm(CasualEmployee $casualEmployee)
     {
         // Pass the casual employee data to the view
         return view('download_form', compact('casualEmployee'));
     }
 
-    }
+
+
+ }
+
 
