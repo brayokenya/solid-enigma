@@ -12,6 +12,7 @@ use App\Http\Controllers\CasualEmployeesImportController;
 use App\Http\Controllers\TimetrackingController;
 use App\Http\Controllers\CompensationController;
 use App\Http\Controllers\CasualEmployeeProfileController;
+use App\Http\Controllers\CasualInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,8 @@ Route::middleware([
     Route::get('/dashboard', [CasualEmployeeController::class, 'index'])->name('dashboard');
 });
 
-
+Route::get('/casual-info', [CasualInfoController::class, 'index'])->name('casual-info.index');
+Route::get('/casual-info/{id}', [CasualInfoController::class, 'show'])->name('casual-info.show');
 Route::get('/casual-employees', [CasualEmployeeController::class, 'index'])->name('casual-employees.index');
 Route::get('/casual-employee-profiles/create', [CasualEmployeeProfileController::class, 'create'])->name('casual_employee_profiles.create');
 Route::post('/casual-employee-profiles', [CasualEmployeeProfileController::class, 'store'])->name('casual_employee_profiles.store');
