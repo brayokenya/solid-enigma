@@ -13,6 +13,7 @@ use App\Http\Controllers\TimetrackingController;
 use App\Http\Controllers\CompensationController;
 use App\Http\Controllers\CasualEmployeeProfileController;
 use App\Http\Controllers\CasualInfoController;
+use App\Http\Controllers\CasualsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::middleware([
     Route::get('/dashboard', [CasualEmployeeController::class, 'index'])->name('dashboard');
 });
 
+Route::get('/casual-info', [CasualInfoController::class, 'index'])->name('casual-info.index');
+// Route::get('/casuals/{id}/edit', [CasualsController::class, 'edit'])->name('casuals.edit');
+// Route::put('/casuals/{id}', [CasualsController::class, 'update'])->name('casuals.update');
+Route::delete('/casuals/{casualEmployee}', [CasualEmployeeController::class, 'offboard'])->name('casuals.offboard');
 Route::get('/casual-info', [CasualInfoController::class, 'index'])->name('casual-info.index');
 Route::get('/casual-info/{id}', [CasualInfoController::class, 'show'])->name('casual-info.show');
 Route::get('/casual-employees', [CasualEmployeeController::class, 'index'])->name('casual-employees.index');

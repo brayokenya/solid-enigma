@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use App\Exports\ExportCasualEmployees;
 use App\Models\Timetracking;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\CasualInfoController;
 
 
 class CasualEmployeeController extends Controller
