@@ -207,6 +207,7 @@
 
                                     {{-- <button type="submit" class="btn btn-primary">Submit</button>
                                 </form> --}}
+                                {{-- @foreach($casualEmployees as $casualEmployee) --}}
                                 <div class="py-12">
                                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -214,8 +215,20 @@
                                                 @csrf
                                                 <input type="file" name="file" accept=".xlsx, .xls">
                                                 <button type="submit">Upload File</button>
+
                                             </form> --}}
 
+                                            {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end"> --}}
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="{{ route('casual-employees.export.excel') }}" class="btn btn-success me-md-2">Export to Excel</a>
+                                                <a href="{{ route('casual-employees.export.pdf') }}" class="btn btn-danger">Export to PDF</a>
+                                            </div>
+                                            {{-- <div class="ml-auto"> --}}
+                                                <!-- Your download button link goes here -->
+                                                {{--<a href="#" class="btn btn-primary">Download</a>--}}
+                                                {{-- <a href="{{ route('download.form', $casualEmployee) }}" class="btn btn-primary">Download Form</a>
+                                            </div>
+                                            @endforeach --}}
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($casualEmployees as $casualEmployee)
@@ -260,11 +273,17 @@
                                     </td>
                                 </tr>
                                 <!-- Include buttons to trigger export -->
-                            <a href="{{ route('casual-employees.export.excel') }}" class="btn btn-success">Export to Excel</a>
-                            <a href="{{ route('casual-employees.export.pdf') }}" class="btn btn-danger">Export to PDF</a>
+                            {{-- <a href="{{ route('casual-employees.export.excel') }}" class="btn btn-success">Export to Excel</a> --}}
+                            {{-- <a href="{{ route('casual-employees.export.pdf') }}" class="btn btn-danger">Export to PDF</a> --}}
 
                                 <!-- Casual employees list -->
                                 <div class="casuals-list">
+                                    {{-- <div class="flex justify-end">
+                                        <button type="submit"
+                                            class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            {{ __('Download') }}
+                                        </button>
+                                    </div> --}}
                                     <!-- Display casual employees here -->
                                 </div>
                                 @endforeach
