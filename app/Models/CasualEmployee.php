@@ -52,6 +52,10 @@ class CasualEmployee extends Model
         return $this->hasOne(ArchivedCasualEmployee::class);
     }
 
+    // public function payrollS()
+    // {
+    //     return $this->hasMany(Payroll::class, 'employee_id', 'id');
+    // }
         public function timetrackings()
     {
         return $this->hasMany(Timetracking::class, 'employee_id');
@@ -68,4 +72,16 @@ class CasualEmployee extends Model
         {
             return $this->hasOne(CasualEmployeeProfile::class);
         }
+
+        public function payroll()
+        {
+            return $this->belongsTo(Payroll::class, 'employee_id', 'id');
+        }
+
+        public function timetracking()
+    {
+        return $this->hasMany(Timetracking::class, 'employee_id');
+    }
+
+
 }

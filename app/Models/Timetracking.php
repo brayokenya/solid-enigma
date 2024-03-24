@@ -25,9 +25,14 @@ class Timetracking extends Model
     /**
      * Get the employee that owns the timetracking.
      */
+
     public function employee()
     {
         return $this->belongsTo(CasualEmployee::class, 'employee_id');
 
+    }
+    public function payroll()
+    {
+        return $this->belongsTo(Payroll::class, 'employee_id', 'id');
     }
 }

@@ -190,24 +190,7 @@
                                     <!-- Add similar th elements for other fields -->
                                 </tr>
 
-                                {{-- <a href="{{ route('casuals.profile.bulk') }}" class="btn btn-primary">Bulk Onboard Employees</a> --}}
-
-                                {{-- <form method="POST" action="{{ route('bulk.onboard') }}" enctype="multipart/form-data">
-                                    @csrf
-
-                                    <div class="form-group">
-                                        <label for="file">Upload Excel File</label>
-                                        <input id="file" type="file" class="form-control-file" name="file" required>
-                                        @error('file')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div> --}}
-
-                                    {{-- <button type="submit" class="btn btn-primary">Submit</button>
-                                </form> --}}
-                                {{-- @foreach($casualEmployees as $casualEmployee) --}}
+                                
                                 <div class="py-12">
                                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">

@@ -16,4 +16,5 @@ class Compensation extends Model
     {
         return $this->belongsTo(CasualEmployee::class);
     }
+   
 }

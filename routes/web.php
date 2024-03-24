@@ -88,5 +88,6 @@ Route::put('/compensations/{compensation}/approve', [CompensationController::cla
 Route::get('/compensations/payment-sheet', [CompensationController::class, 'generatePaymentSheet'])->name('compensations.payment-sheet');
 Route::post('/compensations/process-bulk', [CompensationController::class, 'processBulk'])->name('compensations.process-bulk');
 Route::get('/clock-in', [TimeTrackingController::class, 'clockIn'])->name('clock.in');
-
+Route::get('/compensation/initiate', [CompensationController::class, 'initiate'])->name('compensation.initiate');
+Route::get('/compensation/approval', [CompensationController::class, 'submitForApproval'])->name('compensation.submitForApproval');
 

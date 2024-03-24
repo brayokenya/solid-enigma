@@ -36,6 +36,18 @@ class CompensationController extends Controller
 
         return redirect()->back()->with('success', 'Compensation approved successfully.');
     }
+    public function initiate(Request $request)
+    {
+
+        return response()->json(['message' => 'Compensation processing initiated successfully']);
+    }
+
+    // Method to submit compensations for approval
+    public function submitForApproval(Request $request)
+    {
+
+        return response()->json(['message' => 'Compensations submitted for approval successfully']);
+    }
 
     public function generatePaymentSheet()
     {

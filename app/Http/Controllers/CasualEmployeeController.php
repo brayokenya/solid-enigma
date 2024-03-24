@@ -283,7 +283,20 @@ public function exportCasualEmployees()
         return view('download_form', compact('casualEmployee'));
     }
 
+    public function process(Request $request)
+    {
+        // Retrieve selected casual employee IDs
+        $selectedCasuals = $request->input('selected_casuals');
 
+        // Loop through selected casual employees and initiate compensation processing
+        foreach ($selectedCasuals as $casualId) {
+            $casualEmployee = CasualEmployee::find($casualId);
+            // Process compensation for $casualEmployee (e.g., update status, send notifications, etc.)
+        }
+
+        // Redirect back with a success message or handle as needed
+        return redirect()->back()->with('success', 'Compensation processing initiated successfully.');
+    }
 
  }
 

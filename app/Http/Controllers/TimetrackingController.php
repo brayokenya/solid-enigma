@@ -22,14 +22,46 @@ class TimetrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // Retrieve all time trackings from the database
-        $timetrackings = Timetracking::all();
+    // TimeTrackingController.php
 
-        // Return the view with the time trackings data
-        return view('timetrackings.index', compact('timetrackings'));
-    }
+public function index(Request $request)
+{
+    // Filter parameters
+    $fromDate = $request->input('from_date');
+    $toDate = $request->input('to_date');
+    $code = $request->input('code');
+    $department = $request->input('department');
+    $idNumber = $request->input('id_number');
+
+    // Query Time Tracking Entries based on filters
+    $timetrackings = TimeTracking::whereHas('employee', function ($query) use ($code, $department, $idNumber) {
+        if ($code) {
+            $query->where('casual_code', $code);
+        }
+        if ($department) {
+            $query->where('department', $department);
+        }
+        if ($idNumber) {
+            $query->where('id_number', $idNumber);
+        }
+    })
+    ->when($fromDate, function ($query) use ($fromDate) {
+        return $query->whereDate('date', '>=', $fromDate);
+    })
+    ->when($toDate, function ($query) use ($toDate) {
+        return $query->whereDate('date', '<=', $toDate);
+    })
+    ->get();
+
+    return view('timetrackings.index', compact('timetrackings'));
+}
+
+    // public function index()
+    // {
+    //     $timetrackings = Timetracking::all();
+
+    //     return view('timetrackings.index', compact('timetrackings'));
+    // }
 
     /**
      * Show the form for creating a new time tracking.
@@ -195,5 +227,32 @@ class TimetrackingController extends Controller
         return response()->json(['message' => 'No clock in found for the employee today'], 404);
     }
 
+// Add the filter function
+// public function index(Request $request)
+//     {
+//         $query = Timetracking::query();
 
+//         // Apply filters
+//         if ($request->filled('from_date')) {
+//             $query->where('date', '>=', $request->input('from_date'));
+//         }
+
+//         if ($request->filled('to_date')) {
+//             $query->where('date', '<=', $request->input('to_date'));
+//         }
+
+//         if ($request->filled('code')) {
+//             $query->where('code', $request->input('code'));
+//         }
+
+//         if ($request->filled('department')) {
+//             $query->where('department', $request->input('department'));
+//         }
+
+//         // Add handling for other filter options
+
+//         $timetrackings = $query->paginate(10);
+
+//         return view('timetrackings.index', compact('timetrackings'));
+//     }
 }

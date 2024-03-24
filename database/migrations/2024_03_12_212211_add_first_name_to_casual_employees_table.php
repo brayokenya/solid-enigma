@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('department');
             $table->decimal('rate_per_day', 10, 2);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            
         });
     }
 
